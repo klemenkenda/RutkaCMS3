@@ -1,0 +1,45 @@
+##########################################################
+# Minimal example of RutkaCMS legacy config format
+##########################################################
+
+[type: config]
+<part: sitedata>
+name = RutkaCMS
+lang = si
+SQLserver = localhost
+DBname = rutkacms
+DBlogin = root
+DBpassword = secret
+<part: colors>
+
+[form: pages]
+<part: main>
+name = Strani
+formtype = import
+listorder = id
+<field: pa_title>
+name = Naslov
+type = text_field
+<field: pa_uri>
+name = URI
+type = text_field
+<field: pa_content>
+name = Vsebina
+type = richtextarea
+
+[form: news]
+<part: main>
+name = Novice
+formtype = import
+listorder = ne_date DESC
+<field: ne_date>
+name = Datum
+type = date
+<field: ne_title>
+name = Naslov
+type = text_field
+<field: ne_content>
+name = Vsebina
+type = richtextarea
+
+END_CONFIG

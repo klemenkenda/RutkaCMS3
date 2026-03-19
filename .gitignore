@@ -1,0 +1,12 @@
+# Node
+admin/node_modules/
+admin/.next/
+
+# PHP
+backend/.env
+admin/.env.local
+
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db
