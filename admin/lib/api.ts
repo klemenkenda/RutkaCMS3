@@ -13,6 +13,12 @@ export type FormField = {
   comment?: string | null;
   start?: string | null;
   dir?: string | null;
+  data?: string | null;
+};
+
+export type FieldOption = {
+  value: string;
+  label: string;
 };
 
 export type FormSchema = {
@@ -33,12 +39,17 @@ const browserApi = env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 const API = typeof window === "undefined" ? serverApi : browserApi;
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers: Record<string, string> = {
+    ...(init?.headers as Record<string, string> | undefined),
+  };
+
+  if (!(init?.body instanceof FormData) && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const response = await fetch(`${API}${path}`, {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-    },
+    headers,
     cache: "no-store",
   });
 
@@ -82,5 +93,24 @@ export async function updateEntry(slug: string, id: number, payload: Record<stri
 export async function deleteEntry(slug: string, id: number): Promise<void> {
   await request(`/api/forms/${slug}/entries/${id}`, {
     method: "DELETE",
+  });
+}
+
+export async function getFieldOptions(slug: string, fieldKey: string): Promise<FieldOption[]> {
+  const data = await request<{ options: FieldOption[] }>(`/api/forms/${slug}/options/${fieldKey}`);
+  return data.options;
+}
+
+export async function uploadFieldFile(
+  slug: string,
+  fieldKey: string,
+  file: File,
+): Promise<{ filename: string; relativePath: string }> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return request<{ filename: string; relativePath: string }>(`/api/forms/${slug}/upload/${fieldKey}`, {
+    method: "POST",
+    body: formData,
   });
 }

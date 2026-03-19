@@ -162,7 +162,8 @@ button {
 }
 
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -208,6 +209,38 @@ td {
   padding: 8px;
   text-align: left;
   vertical-align: top;
+}
+
+.fieldComment {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.htmlEditorWrap {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.htmlEditorToolbar {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  background: #f9fbfd;
+}
+
+.htmlEditorToolbar button {
+  padding: 4px 8px;
+  min-width: 36px;
+}
+
+.htmlEditor {
+  min-height: 130px;
+  padding: 10px;
+  outline: none;
 }
 
 @media (max-width: 700px) {

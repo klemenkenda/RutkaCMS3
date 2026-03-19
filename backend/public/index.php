@@ -49,6 +49,20 @@ try {
         jsonResponse(200, $service->getFormSchema($m[1]));
     }
 
+    if (preg_match('#^/api/forms/([A-Za-z_][A-Za-z0-9_]*)/options/([A-Za-z_][A-Za-z0-9_]*)$#', $path, $m) === 1 && $method === 'GET') {
+        jsonResponse(200, ['options' => $service->getFieldOptions($m[1], $m[2])]);
+    }
+
+    if (preg_match('#^/api/forms/([A-Za-z_][A-Za-z0-9_]*)/upload/([A-Za-z_][A-Za-z0-9_]*)$#', $path, $m) === 1 && $method === 'POST') {
+        $file = $_FILES['file'] ?? null;
+        if (!is_array($file)) {
+            jsonResponse(400, ['error' => 'Missing upload payload: file']);
+        }
+
+        $result = $service->uploadFieldFile($m[1], $m[2], $file, $baseDir);
+        jsonResponse(200, $result);
+    }
+
     if (preg_match('#^/api/forms/([A-Za-z_][A-Za-z0-9_]*)/entries$#', $path, $m) === 1) {
         $form = $m[1];
 

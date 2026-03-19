@@ -7,10 +7,12 @@ This backend reads your legacy RutkaCMS config file and exposes a dynamic admin 
 - `GET /health`
 - `GET /api/forms`
 - `GET /api/forms/{form}`
+- `GET /api/forms/{form}/options/{field}`
 - `GET /api/forms/{form}/entries?limit=50&offset=0`
 - `POST /api/forms/{form}/entries`
 - `PUT /api/forms/{form}/entries/{id}`
 - `DELETE /api/forms/{form}/entries/{id}`
+- `POST /api/forms/{form}/upload/{field}` (multipart form field name: `file`)
 
 ## Setup
 
